@@ -1,6 +1,6 @@
 const QRCode = require('qrcode');
 
-const websiteURL = "https://foodiesquad.com"; // ✅ Replace with your real website link
+const websiteURL = "https://github.com/Moulyagowda-19/foodie_squad.git"; // ✅ Replace with your real website link
 
 QRCode.toFile('foodie-qr.png', websiteURL, function (err) {
   if (err) throw err;
