@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Squad</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: #fff7e6;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 50px;
+            background: #ff7b00;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            animation: pop 1.2s infinite alternate;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .banner {
+            text-align: center;
+            padding: 120px 20px;
+            background: linear-gradient(#ff7b00, #ffbd59);
+            color: white;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .banner h2 {
+            font-size: 48px;
+            animation: float 2s infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        section {
+            padding: 80px 50px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 20px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            animation: slideUp 1s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.1) rotate(2deg);
+            background: #fff0d1;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .emoji {
+            font-size: 45px;
+            display: block;
+            margin-bottom: 10px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .review-list p {
+            font-size: 20px;
+            background: #fff0d1;
+            padding: 12px;
+            border-radius: 10px;
+            margin: 10px 0;
+            animation: fadeIn 0.5s;
+        }
+
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: auto;
+            gap: 12px;
+        }
+
+        .review-form input,
+        .review-form select,
+        .review-form textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #aaa;
+            font-size: 16px;
+        }
+
+        .review-form textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #ff7b00;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background: #cc6300;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #ff7b00;
+            color: white;
+            margin-top: 40px;
+        }
+
+        #foodModal {
+            display:none; 
+            position:fixed; 
+            top:0; left:0; width:100%; height:100%; 
+            background:rgba(0,0,0,0.6); 
+            justify-content:center; 
+            align-items:center;
+            z-index: 2000;
+        }
+
+        #foodModal .modal-box {
+            background:white; 
+            padding:25px; 
+            border-radius:15px; 
+            width:300px; 
+            text-align:center; 
+            animation: popIn 0.3s;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* ✅ QR Section Styling */
+        .qr-section {
+            text-align: center;
+            background: #fff3cd;
+            border-top: 4px solid #ff8800;
+            padding: 60px 20px;
+        }
+
+        .qr-section img {
+            width: 200px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🍔 Foodie Squad</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#location">Location</a>
+            <a href="#order">Order</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#qr">QR Code</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="banner" id="home">
+        <h2>Fresh • Fun • Flavor!</h2>
+        <p>The coolest street food experience.</p>
+    </div>
+
+    <!-- ✅ MENU SECTION -->
+    <section id="menu">
+        <h3>🍽 Our Special Menu</h3>
+
+        <div class="menu-container">
+
+            <div class="card" 
+                data-name="Oreo Dessert"
+                data-ingredients="Oreo biscuit, Milk, Milk powder"
+                data-reviews="Kids love it! Sweet & creamy!">
+                <span class="emoji">🍪</span>
+                Oreo Dessert
+            </div>
+
+            <div class="card"
+                data-name="Corn Chaat"
+                data-ingredients="Corn, Chilli powder, Salt, Onion, Tomato, Pomegranate"
+                data-reviews="Fresh & spicy! Perfect snack!">
+                <span class="emoji">🌽</span>
+                Corn Chaat
+            </div>
+
+            <div class="card"
+                data-name="Fruit Bowl"
+                data-ingredients="Fruits, Ice-cream, Cherry"
+                data-reviews="Refreshing and tasty!">
+                <span class="emoji">🍓</span>
+                Fruit Bowl
+            </div>
+
+            <div class="card"
+                data-name="Spicy Nippat"
+                data-ingredients="Nippat, Chilli powder, Onion, Tomato, Sev"
+                data-reviews="Crispy & spicy! Crowd favorite!">
+                <span class="emoji">🔥</span>
+                Spicy Nippat
+            </div>
+
+            <div class="card"
+                data-name="Peanut Nippat"
+                data-ingredients="Nippat, Peanuts, Sweet chutney, Coriander, Masala"
+                data-reviews="Crunchy and flavorful!">
+                <span class="emoji">🥜</span>
+                Peanut Nippat
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ✅ LOCATION -->
+    <section id="location">
+        <h3>📍 Our Location</h3>
+        <div style="text-align:center;">
+            <p>Near Your Street, Bengaluru</p>
+            <a class="btn" href="https://maps.google.com" target="_blank">Open in Maps</a>
+        </div>
+    </section>
+
+    <!-- ✅ ORDER -->
+    <section id="order">
+        <h3>🛒 Order Now</h3>
+        <div style="text-align:center;">
+            <a class="btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp</a>
+            <br><br>
+            <a class="btn" href="tel:+91XXXXXXXXXX">Call Us</a>
+        </div>
+    </section>
+
+    <!-- ✅ REVIEWS -->
+    <section id="reviews">
+        <h3>⭐ Customer Reviews</h3>
+
+        <div id="reviewList" class="review-list">
+            <p>⭐ “Super tasty and fresh!”</p>
+            <p>⭐ “Best street food in town!”</p>
+            <p>⭐ “Loved the Nippat Masala!”</p>
+        </div>
+
+        <hr style="margin:40px 0;">
+
+        <h3>📝 Write a Review</h3>
+
+        <div class="review-form">
+            <input type="text" id="reviewName" placeholder="Your Name">
+            <select id="reviewRating">
+                <option value="⭐">⭐</option>
+                <option value="⭐⭐">⭐⭐</option>
+                <option value="⭐⭐⭐">⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+            </select>
+            <textarea id="reviewText" placeholder="Write your review..."></textarea>
+            <button class="btn" id="submitReview">Submit Review</button>
+        </div>
+    </section>
+
+    <!-- ✅ QR CODE SECTION -->
+    <section id="qr" class="qr-section">
+        <h3>📱 Scan & Know More!</h3>
+        <p>Scan this QR to get full details about Foodie Squad.</p>
+
+        <!-- ✅ QR Code Image -->
+        <img src="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://foodiesquad.com/stall-info" alt="Foodie Squad QR Code">
+    </section>
+
+    <!-- ✅ CONTACT SECTION -->
+    <section id="contact">
+        <h3>📞 Contact Us</h3>
+        <div style="text-align:center; font-size:20px;">
+            <p><strong>Phone:</strong> +91 12345678</p>
+            <p><strong>Email:</strong> foodie_squad@mail.com</p>
+            <p><strong>Address:</strong> Near Shridevi Institute of Engineering & Technology</p>
+        </div>
+    </section>
+
+    <footer>
+        © 2025 Foodie Squad
+    </footer>
+
+    <!-- ✅ FOOD MODAL + REVIEW SCRIPT -->
+    <script>
+
+        // FOOD POPUP LOGIC
+        const cards = document.querySelectorAll('.card');
+        const modal = document.getElementById('foodModal');
+        const closeBtn = document.getElementById('closeModal');
+
+        const foodName = document.getElementById('foodName');
+        const foodIngredients = document.getElementById('foodIngredients');
+        const foodReviews = document.getElementById('foodReviews');
+
+        cards.forEach(card => {
+            card.onclick = () => {
+                foodName.textContent = card.dataset.name;
+                foodIngredients.textContent = card.dataset.ingredients;
+                foodReviews.textContent = card.dataset.reviews;
+                modal.style.display = 'flex';
+            };
+        });
+
+        closeBtn.onclick = () => {
+            modal.style.display = 'none';
+        };
+
+        window.onclick = (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        };
+
+        // ✅ REVIEW SYSTEM
+        const submitReview = document.getElementById('submitReview');
+        const reviewList = document.getElementById('reviewList');
+
+        submitReview.onclick = () => {
+            const name = document.getElementById('reviewName').value;
+            const rating = document.getElementById('reviewRating').value;
+            const text = document.getElementById('reviewText').value;
+
+            if (name === "" || text === "") {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            const p = document.createElement('p');
+            p.textContent = `${rating} "${text}" - ${name}`;
+            reviewList.appendChild(p);
+
+            document.getElementById('reviewName').value = "";
+            document.getElementById('reviewText').value = "";
+        };
+    </script>
+
+</body>
+</html>
